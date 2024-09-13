@@ -1,4 +1,3 @@
-
 class Grafo:
     def __init__(self):
         self.grafo = {}  # Inicializa el grafo como un diccionario vacío
