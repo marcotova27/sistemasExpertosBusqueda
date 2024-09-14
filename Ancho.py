@@ -16,7 +16,7 @@ class Grafo:
         cola = [[(inicio, 0)]]
 
         if inicio == objetivo:
-            return [inicio], 0
+            return None, 0
 
         while cola:
             camino = cola.pop(0)
@@ -34,22 +34,64 @@ class Grafo:
 
         return None, None
 
-# Crear el grafo
+# Variables de nodos
+nodo_1 = "CETI"
+nodo_2 = "Plaza de la Liberación"
+nodo_3 = "Teatro Degollado"
+nodo_4 = "Templo Expiatorio"
+nodo_5 = "Rotonda de los Jaliscienses Ilustres"
+nodo_6 = "Instituto Cultural Cabañas"
+nodo_7 = "Plaza Tapatía"
+nodo_8 = "Parque Revolución"
+nodo_9 = "Glorieta La Minerva"
+
+def switch_nodo(nodo_numero):
+    return {
+        1: nodo_1,
+        2: nodo_2,
+        3: nodo_3,
+        4: nodo_4,
+        5: nodo_5,
+        6: nodo_6,
+        7: nodo_7,
+        8: nodo_8,
+        9: nodo_9,
+    }.get(nodo_numero, None)
+
+def elegir_nodos():
+    while True:
+        print("\nElige el nodo de inicio:")
+        print("1. CETI\n2. Plaza de la Liberación\n3. Teatro Degollado\n4. Templo Expiatorio\n5. Rotonda de los Jaliscienses Ilustres")
+        print("6. Instituto Cultural Cabañas\n7. Plaza Tapatía\n8. Parque Revolución\n9. Glorieta La Minerva")
+
+        nodo_inicio = int(input("Ingresa el número del nodo de inicio: "))
+        nodo_objetivo = int(input("Ingresa el número del nodo objetivo: "))
+
+        if nodo_inicio == nodo_objetivo:
+            print("\nEl nodo de inicio y objetivo no pueden ser el mismo. Inténtalo de nuevo.")
+        else:
+            return switch_nodo(nodo_inicio), switch_nodo(nodo_objetivo)
+
+# Crear el grafo y añadir aristas
 grafo = Grafo()
 
-# Agregar nodos con distancias
-grafo.agregar_arista('CETI', 'Plaza de la Liberación', 2)
-grafo.agregar_arista('CETI', 'Teatro Degollado', 4)
-grafo.agregar_arista('Plaza de la Liberación', 'Templo Expiatorio', 3)
-grafo.agregar_arista('Teatro Degollado', 'Templo Expiatorio', 2)
-grafo.agregar_arista('Teatro Degollado', 'Rotonda de los Jaliscienses Ilustres', 1)
-grafo.agregar_arista('Templo Expiatorio', 'Rotonda de los Jaliscienses Ilustres', 5)
-grafo.agregar_arista('Instituto Cultural Cabañas', 'Plaza de la Liberación', 1)
-grafo.agregar_arista('Instituto Cultural Cabañas', 'Plaza Tapatía', 2)
-grafo.agregar_arista('Plaza Tapatía', 'Parque Revolución', 3)
+grafo.agregar_arista(nodo_1, nodo_2, 2)
+grafo.agregar_arista(nodo_1, nodo_3, 4)
+grafo.agregar_arista(nodo_2, nodo_4, 3)
+grafo.agregar_arista(nodo_3, nodo_4, 2)
+grafo.agregar_arista(nodo_3, nodo_5, 1)
+grafo.agregar_arista(nodo_4, nodo_5, 5)
+grafo.agregar_arista(nodo_6, nodo_2, 1)
+grafo.agregar_arista(nodo_6, nodo_7, 2)
+grafo.agregar_arista(nodo_7, nodo_8, 3)
 
-# Búsqueda en anchura (BFS) con inicio y objetivo diferentes
-inicio = 'Instituto Cultural Cabañas'
-objetivo = 'Templo Expiatorio'
+# Elige nodos de inicio y objetivo
+inicio, objetivo = elegir_nodos()
+
+# Ejecuta la búsqueda BFS
 camino, distancia = grafo.bfs(inicio, objetivo)
-print(f"Camino BFS de {inicio} a {objetivo}: {camino}, Distancia: {distancia}")
+
+if camino:
+    print(f"\nCamino BFS de {inicio} a {objetivo}: {camino}, Distancia: {distancia}")
+else:
+    print(f"\nNo se encontró un camino entre {inicio} y {objetivo}.")
